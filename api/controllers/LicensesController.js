@@ -196,9 +196,13 @@ module.exports = {
 
 			if (!license.status)
 				return res.status(401).send(ResponseService.res(401, 30020, true));
+			console.log(license)
 
 			let today = moment().utc().format("YYYY-MM-DD");
-			if(moment(today).isSameOrBefore(license.initialDate) || moment(today).isSameOrAfter(license.expirationDate))
+			console.log(today)
+			console.log(moment(today).isSameOrBefore(license.initialDate))
+			console.log(moment(today).isSameOrAfter(license.expirationDate))
+			if(moment(today).isBefore(license.initialDate) || moment(today).isAfter(license.expirationDate))
 				return res.status(401).send(ResponseService.res(401, 30020, true));
 
 			let result = {
