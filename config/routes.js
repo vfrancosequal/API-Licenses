@@ -31,7 +31,6 @@ module.exports.routes = {
   'GET /licenses/validate'            : 'LicensesController.validateLicense',
   'POST /licenses/associate'          : 'LicensesController.associateLicense',
 
-/*
   //'GET /google/login'                 : 'AuthController.loginGoogle',
   //'GET /google/callback'              : 'AuthController.googleCallback',
   'POST /auth/get/token'              : 'AuthController.getAccessToken',
@@ -51,6 +50,7 @@ module.exports.routes = {
   'GET /usuarios/atencion'            : 'UsuariosController.listarLlamdosAtencion',
   'GET /usuarios/redhumana'           : 'UsuariosController.checkRedHumana',
 
+/*
   'GET  /equipos/listar'              : 'EquiposController.listarEquipos',
   'POST /equipos'                     : 'EquiposController.createEquipo',
   'PUT  /equipos'                     : 'EquiposController.updateEquipo',

@@ -30,26 +30,26 @@ module.exports.policies = {
     infoLicense: "isLogin",
     validateLicense: true,
     associateLicense: true,
-  }
-/*  
+  },
   UsuariosController:
   {
-    //"*":true,
-    listarUsuarios: "isLogin",
-    myInfo: "isLogin",
-    infoUser: "isLogin",
-    setPermissions: "isLogin",
-    updateUser: "isLogin",
-    createUser: "isLogin",
-    statusUser: "isLogin",
-    printUsuario: "isLogin",
-    loadCsv: "isLogin",
-    importUsuarios:"isLogin",
-    metricas:true,
-    llamadosAtencion:"isLogin",
-    listarLlamdosAtencion: "isLogin",
-    checkRedHumana: "isLogin"
+    "*":true,
+    // listarUsuarios: "isLogin",
+    // myInfo: "isLogin",
+    // infoUser: "isLogin",
+    // setPermissions: "isLogin",
+    // updateUser: "isLogin",
+    // createUser: "isLogin",
+    // statusUser: "isLogin",
+    // printUsuario: "isLogin",
+    // loadCsv: "isLogin",
+    // importUsuarios:"isLogin",
+    // metricas:true,
+    // llamadosAtencion:"isLogin",
+    // listarLlamdosAtencion: "isLogin",
+    // checkRedHumana: "isLogin"
   },
+/*  
   MarcasController:
   {
     //"*":true,
