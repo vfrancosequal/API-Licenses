@@ -19,8 +19,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  //'GET /'                             : { view: 'api', locals: { layout: false }},
-  //'GET /apidoc'                       : { view: 'pages/documentacion' },
+  'GET /'                             : { view: 'api', locals: { layout: false }},
+  'GET /apidoc'                       : { view: 'pages/documentacion' },
   'POST /login/user'                  : 'AuthController.loginUser',
 
   'POST /licenses'                    : 'LicensesController.createLicense',
