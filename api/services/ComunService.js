@@ -1,5 +1,4 @@
-//const ObjectId 				= require('mongodb').ObjectID;
-const { ObjectId } = require('mongodb');
+const ObjectId 				= require('mongodb').ObjectID;
 const base64Img 			= require('base64-img');
 const fs 					= require('fs');
 //const { v4: uuidv4 } 		= require('uuid');
@@ -122,12 +121,12 @@ module.exports = {
 	},
 	toObjectId : function(id){
 		if(ObjectId.isValid(id)) 
-			return new ObjectId(id) 
+			return ObjectId(id) 
 				
 		return false
 	},
 	newObjectId : function(id){		
-			return new ObjectId(); 						
+			return ObjectId(); 						
 	},
 	validEmail : function(email) {
 	  	return /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,5})$/.test(
@@ -227,58 +226,59 @@ module.exports = {
 	    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 	},
 	
-  isBoolean:function(val){
-  	return 'boolean' === typeof val || ((val.toString()=='true' || parseInt(val)==1) || (val.toString()=='false' || parseInt(val)==0))
-  },
-  toBoolean:function(val){
-  	if(val.toString()=='true' || parseInt(val)==1)
-  	   return true;
-  	if(val.toString()=='false' || parseInt(val)==0)
-  	   return false;
-    return null;	
-  },
-  validate:function(params,fields){
-  	let flag={error:false};
-  	let val=[];
-  	let name='';
-  	let valid='';
-  	let value='';
-  	
-  	for(i=0;i<fields.length;i++){    	     
-  		[name,valid]=fields[i].split(':');    		    		
-  		
-  		if(params[name]==undefined){//no existe el campo
-  			 flag=ResponseService.res(401, 40005, true, name);    			     			
-  		}	 
-  		else{
-    		value=params[name];
-    		if(valid.indexOf('email')>=0){//validar email
-    			if(!ComunService.validEmail(value))
-			      flag=ResponseService.res(401, 20001, true);			      	    			
-    		}
-    		else if(valid.indexOf('boolean')>=0){//validar boolean	    		
-    			if(!ComunService.isBoolean(value))
-			      flag=ResponseService.res(401, 40007, true,name);   
-    		}
-    		else if(valid.indexOf('number')>=0){//validar numero	    			
-    			if(isNaN(value))
-			      flag=ResponseService.res(401, 40007, true,name);			     
-    		}
-    		else if(valid.indexOf('ObjectId')>=0){//validar numero
-    			if(!ComunService.isObjectIdValid(value))
-			      flag=ResponseService.res(401, 40007, true,name);			     
-    		}
-    		else if(valid.indexOf('phone')>=0){//validar numero
-    			if(!ComunService.isValidPhone(value))
-			      flag=ResponseService.res(401, 40007, true,name);			     
-    		}	
-  	    }
-  	    
-  		if(flag.error)
-  			break;
-  	}
-  	return flag;
-  },
+    isBoolean:function(val){
+    	return 'boolean' === typeof val || ((val.toString()=='true' || parseInt(val)==1) || (val.toString()=='false' || parseInt(val)==0))
+    },
+    toBoolean:function(val){
+    	if(val.toString()=='true' || parseInt(val)==1)
+    	   return true;
+    	if(val.toString()=='false' || parseInt(val)==0)
+    	   return false;
+      return null;	
+    },
+    validate:function(params,fields){
+    	let flag={error:false};
+    	let val=[];
+    	let name='';
+    	let valid='';
+    	let value='';
+    	
+    	for(i=0;i<fields.length;i++){    	     
+    		[name,valid]=fields[i].split(':');    		    		
+    		
+    		if(params[name]==undefined){//no existe el campo
+    			 flag=ResponseService.res(401, 40005, true, name);    			     			
+    		}	 
+    		else{
+	    		value=params[name];
+	    		if(valid.indexOf('email')>=0){//validar email
+	    			if(!ComunService.validEmail(value))
+				      flag=ResponseService.res(401, 20001, true);			      	    			
+	    		}
+	    		else if(valid.indexOf('boolean')>=0){//validar boolean	    		
+	    			if(!ComunService.isBoolean(value))
+				      flag=ResponseService.res(401, 40007, true,name);
+				      
+	    		}
+	    		else if(valid.indexOf('number')>=0){//validar numero	    			
+	    			if(isNaN(value))
+				      flag=ResponseService.res(401, 40007, true,name);			     
+	    		}
+	    		else if(valid.indexOf('ObjectId')>=0){//validar numero
+	    			if(!ComunService.isObjectIdValid(value))
+				      flag=ResponseService.res(401, 40007, true,name);			     
+	    		}
+	    		else if(valid.indexOf('phone')>=0){//validar numero
+	    			if(!ComunService.isValidPhone(value))
+				      flag=ResponseService.res(401, 40007, true,name);			     
+	    		}	
+    	    }
+    	    
+    		if(flag.error)
+    			break;
+    	}
+    	return flag;
+    },
   arraytoObjectId : function(arr)
   {
   	for(let q=0;q<arr.length;q++)
@@ -303,17 +303,9 @@ module.exports = {
         if(device.client!=null)        	
         	return device.client.type;
         return 'device';
+
+
 	},
-	generateCode:function() {
-	  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	  let code = '';
-	  for (let i = 0; i < 20; i++) {
-	    const randomIndex = Math.floor(Math.random() * characters.length);
-	    code += characters.charAt(randomIndex);
-	    if ((i + 1) % 5 === 0 && i !== 19) {
-	      code += '-';
-	    }
-	  }
-	  return code;
-	},    
+
+    
 }

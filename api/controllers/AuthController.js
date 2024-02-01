@@ -78,11 +78,12 @@ module.exports = {
 			let val = ComunService.validate(params, valid);
 			if (val.error) return res.status(401).send(val); 
 			console.log("Antes")
-			let user = await ModelService.findOne('user',{_id:params.email.toLowerCase(),active:true})
-			if (!user)
+			let user = await ModelService.find('user',{_id:params.email.toLowerCase(),active:true})
+			console.log(user)
+			if (user.length == 0)
 				return res.status(401).send(ResponseService.res(401, 30001, true));
 			console.log("Despues")
-			
+			user = user[0];
 			if (user.profileNew != 'sequalAutomator')
 				return res.status(401).send(ResponseService.res(401, 30001, true));
 
