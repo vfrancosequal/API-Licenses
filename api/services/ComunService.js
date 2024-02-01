@@ -306,6 +306,16 @@ module.exports = {
 
 
 	},
-
-    
+	generateCode:function() {
+	  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	  let code = '';
+	  for (let i = 0; i < 20; i++) {
+	    const randomIndex = Math.floor(Math.random() * characters.length);
+	    code += characters.charAt(randomIndex);
+	    if ((i + 1) % 5 === 0 && i !== 19) {
+	      code += '-';
+	    }
+	  }
+	  return code;
+	},    
 }
