@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+        <link rel="stylesheet" href="../node_modules/chosen-js/chosen.min.css">
+        <!--script src="../node_modules/chosen-js/chosen.jquery.min.js"></script-->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+        <style type="text/css">
+            table {
+               width: 100%;
+               border: 1px solid #000;
+            }
+            th, td {
+               /*width: 25%;*/
+               text-align: left;
+               vertical-align: top;
+               border: 1px solid #000;
+               border-collapse: collapse;
+               padding: 0.3em;
+               caption-side: bottom;
+            }
+            caption {
+               padding: 0.3em;
+            }           
+        </style>
+    </head>
+	<body>
+		<div class="container ">
+			<center>
+                <br><p style="font-size:12px;"><strong>INFORMACIÓN DEL ASOCIADO</strong></p>
+            </center>
+			<%
+				if(data.photo){
+			%>
+				<center>
+					<img id="photoUser" src='<%=data.photo%>' alt="User" class="rounded-circle" style="border-radius: 35px;width: 4rem;height: 4rem;"/>
+				</center>
+				<br>
+			<%
+				}else{
+			%>
+				<center>
+					<img id="photoUser" src=" data:image/png;base64,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" alt="User" class="rounded-circle" style="border-radius: 35px;width: 4rem;height: 4rem;"/>
+				</center>
+				<br>
+			<%}%>	
+			<center>
+				<table style="border-color: black; border-collapse: collapse;" border="1">
+					<tbody>
+                        <tr>
+                            <td colspan="12">
+                                <p style="height: 2px; text-align: center; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>INFORMACIÓN PERSONAL</strong>
+                                </p>
+                            </td>
+                        </tr>						
+						<tr>
+                            <td colspan="6">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Nombres y Apellidos:</strong> <span id="fullName"><%=data.nombres%> <%=data.apellidos%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Identificación:</strong> <span id="numeroDocumento"><%=(data.tipoDocumento)?data.tipoDocumento.toUpperCase()+' '+data.numeroDocumento:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Estado Civil:</strong> <span id="estadoCivil"><%=(data.estadoCivil)?data.estadoCivil.charAt(0).toUpperCase()+data.estadoCivil.slice(1):'Sin información'%></span>
+                                </p>
+                            </td>							
+						</tr>
+                        <tr>
+                            <td colspan="6">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Email:</strong> <span id="email"><%=data.email%></span>
+                                </p>
+                            </td>
+                            <td colspan="6">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Email Personal:</strong> <span id="emailPersonal"><%=data.emailPersonal%></span>
+                                </p>
+                            </td>                         
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Número Emergencia:</strong> <span id="emergencia"><%=(data.numEmergencia)?data.contactoEmergencia+': '+data.numEmergencia:'Sin información'%></span>
+                                </p>
+                            </td>                         
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Celular:</strong> <span id="celular"><%=(data.celular)?data.celular:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Fijo:</strong> <span id="local"><%=(data.localPhone)?data.localPhone:'Sin información'%></span>
+                                </p>
+                            </td>
+                        </tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Fecha de Nacimiento:</strong> <span id="nacimiento"><%=(data.cumpleaños)?data.cumpleaños:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Tipo de Sangre:</strong> <span id="sangre"><%=(data.tipoSangre)?data.tipoSangre:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Sexo:</strong> <span id="sexo"><%=(data.genero)?data.genero:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Departamento:</strong> <span id="departamento"><%=(data.departamento)?data.departamento:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Ciudad:</strong> <span id="ciudad"><%=(data.ciudad)?data.ciudad:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Barrio:</strong> <span id="barrio"><%=(data.barrio)?data.barrio:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                        </tr>                    
+                        <tr>
+                            <td colspan="12">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Dirección:</strong> <span id="direccion"><%=(data.direccion)?data.direccion:'Sin información'%></span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Eneatipo:</strong> <span id="eneatipo"><%=(data.eneatipo)?data.eneatipo:'Sin información'%></span>
+                                </p>
+                            </td>                                           
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>T. Pantalón:</strong> <span id="pantalon"><%=(data.tallaPantalon)?data.tallaPantalon:'Sin información'%></span>
+                                </p>
+                            </td>   
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>T. Camisa:</strong> <span id="camisa"><%=(data.tallaCamisa)?data.tallaCamisa:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Hijos:</strong> <span id="hijos"><%=(data.hijos=='SI')?data.numeroHijos:data.hijos%></span>
+                                </p>
+                            </td>                         
+                        </tr>					
+					</tbody>
+				</table><br>
+                <table style="border-color: black; border-collapse: collapse;" border="1">
+                    <tbody>
+                        <tr>
+                            <td colspan="12">
+                                <p style="height: 2px; text-align: center; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>INFORMACIÓN LABORAL</strong>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Perfil/Cargo:</strong> <span id="cargo"><%=(data.perfil)?data.perfil:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Perfil Profesional:</strong> <span id="perfil"><%=(data.perfilProfesional)?data.perfilProfesional:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Seniority:</strong> <span id="seniority"><%=(data.seniority)?data.seniority:'Sin información'%></span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Contrato:</strong> <span id="contrato"><%=(data.tipoContrato)?data.tipoContrato:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Salario Base:</strong> <span id="base"><%=(data.salarioBase)?data.salarioBase:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Salario Flexible:</strong> <span id="flexible"><%=(data.salarioFlexible)?data.salarioFlexible:'Sin información'%></span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>T. Auxilio:</strong> <span id="tipoAux"><%=(data.tipoAuxilio)?data.tipoAuxilio:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>V. Auxilio:</strong> <span id="valorAux"><%=(data.valorAuxilio)?data.valorAuxilio:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Salario Total:</strong> <span id="total"><%=parseInt(data.salarioBase)+parseInt(data.salarioFlexible)%></span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Último Incremento:</strong> <span id="incremento"><%=(data.fechaUltimoIncremento)?data.fechaUltimoIncremento:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Fecha de Ingreso:</strong> <span id="ingreso"><%=(data.fecha_ingreso)?data.fecha_ingreso:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Pensión:</strong> <span id="pension"><%=(data.pension)?data.pension.pension:'Sin información'%></span>
+                                </p>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>ARL:</strong> <span id="arl"><%=(data.arl)?data.arl.arl:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>EPS:</strong> <span id="eps"><%=(data.eps)?data.eps.eps:'Sin información'%></span>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>C. Compensación:</strong> <span id="compensacion"><%=(data.compensacion)?data.compensacion.compensacion:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Cesantías:</strong> <span id="cesantias"><%=(data.cesantias)?data.cesantias.cesantia:'Sin información'%></span>
+                                </p>
+                            </td>                     
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Horas x Semana:</strong> <span id="horasS"><%=(data.horasSemana)?data.horasSemana:'Sin información'%></span>
+                                </p>
+                            </td>                                               
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Horas Potenciales:</strong> <span id="potenciales"><%=(data.horasPotenciales)?data.horasPotenciales:'Sin información'%></span>
+                                </p>
+                            </td>
+                        </tr>                    
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Tarifa x Hora:</strong> <span id="tarifa"><%=(data.tarifaHora)?data.tarifaHora:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                        </tr>
+                        <tr>
+                            <td colspan="12">
+                                <p style="height: 50px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Cursos:</strong> 
+                                    <span id="cursos"><%=(data.txtcursos!='')?data.txtcursos:'Sin información'%></span>
+                                </p>
+                            </td>                                               
+                        </tr>                   
+                        <tr>
+                            <td colspan="12">
+                                <p style="height: 50px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>SoftSkills:</strong> 
+                                    <span id="soft"><%=(data.txtsoft!='')?data.txtsoft:'Sin información'%></span> 
+                                </p>
+                            </td>                                               
+                        </tr>                   
+                        <tr>
+                            <td colspan="12">
+                                <p style="height: 50px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>HardSkills:</strong> 
+                                    <span id="hard"><%=(data.txthard!='')?data.txthard:'Sin información'%></span>
+                                </p>
+                            </td>                                               
+                        </tr>                                       
+                    </tbody>
+                </table><br>
+                <table style="border-color: black; border-collapse: collapse;" border="1">
+                    <tbody>
+                        <tr>
+                            <td colspan="12">
+                                <p style="height: 2px; text-align: center; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>INFORMACIÓN RED HUMANA</strong>
+                                </p>
+                            </td>
+                        </tr>            
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Usuario:</strong> <span id="usuario"><%=(data.usuarioRed)?data.usuarioRed:'Sin información'%></span>
+                                </p>
+                            </td>   
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Ingreso:</strong> <span id="ingresoRH"><%=(data.fechaIngresoRed)?data.fechaIngresoRed:'Sin información'%></span>
+                                </p>
+                            </td>                                           
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Retiro:</strong> <span id="retiroRH"><%=(data.fechaRetiroRed)?data.fechaRetiroRed:'Sin información'%></span>
+                                </p>
+                            </td>   
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Renovación:</strong> <span id="renovacionRH"><%=(data.fechaProrrogaRed)?data.fechaProrrogaRed:'Sin información'%></span>
+                                </p>
+                            </td>                       
+                        </tr>                    
+                    </tbody>
+                </table><br>
+                <table style="border-color: black; border-collapse: collapse;" border="1">
+                    <tbody>
+                        <tr>
+                            <td colspan="12">
+                                <p style="height: 2px; text-align: center; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>INFORMACIÓN BANCARIA</strong>
+                                </p>
+                            </td>
+                        </tr>            
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Banco:</strong> <span id="banco"><%=(data.banco)?data.banco:'Sin información'%></span>
+                                </p>
+                            </td>   
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Tipo Cuenta:</strong> <span id="tipoCta"><%=(data.tipoCuenta)?data.tipoCuenta:'Sin información'%></span>
+                                </p>
+                            </td>                                           
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: left; font-size: 9px; font-family: 'Helvetica';">
+                                    <strong>Número de Cuenta:</strong> <span id="numeroCta"><%=(data.numeroCuenta)?data.numeroCuenta:'Sin información'%></span>
+                                </p>
+                            </td>   
+                        </tr>                   
+                    </tbody>
+                </table>
+			</center>
+			<%    
+			if(data.epp)
+    		{
+    		%>
+			<center><br>
+                <table id="tableEPP" style="border-color: black; border-collapse: collapse;" border="1">
+                    <!--div style="page-break-after: always"></div><br-->
+                    <thead>
+                        <tr>
+                            <td colspan="24">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                    <strong>INFORMACIÓN EPP</strong>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                    <strong>Elemento</strong>
+                                </p>
+                            </td>   
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                    <strong>Valor</strong>
+                                </p>
+                            </td>                                           
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                    <strong>F. Entrega</strong>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                    <strong>F. Retiro</strong>
+                                </p>
+                            </td>   
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                    <strong>Proveedor</strong>
+                                </p>
+                            </td>                                           
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                    <strong>Contacto</strong>
+                                </p>
+                            </td>                          
+                        </tr>
+                    </thead>
+                    <tbody id="epp">
+                    <%
+			        for(var i=0;i < data.epp.length;i++)
+			        {
+                    %>
+						<tr>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                <%=data.epp[i].elemento%>
+                                </p>
+                            </td>   
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                <%=data.epp[i].valorComercial%>
+                                </p>
+                            </td>                                           
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                <%=data.epp[i].fechaEntrega%>
+                                </p>
+                            </td>
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                <%=data.epp[i].fechaRetiro%>
+                                </p>
+                            </td>   
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                <%=data.epp[i].proveedor%>
+                                </p>
+                            </td>                                           
+                            <td colspan="4">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                <%=data.epp[i].contacto%>
+                                </p>
+                            </td>                          
+                        </tr>                    
+                    <%
+					}
+                    %>	
+                    </tbody>
+                </table>                         
+            </center>
+            <%
+            }
+        	%>
+			<%   
+			if(data.proyectos)
+    		{
+    		%>            
+            <div style="page-break-after: always"></div>
+            <center><br>
+                <table id="tableProyectos" style="width: 100%; border-color: black; border-collapse: collapse; empty-cells: hide;" border="1">
+                    <thead>
+                        <tr>
+                            <td colspan="12">
+                                <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+                                    <strong>INFORMACIÓN PROYECTOS</strong>
+                                </p>
+                            </td>
+                        </tr>
+                    </thead>                
+                    <tbody id="proyectos">
+                    <%
+			        for(var i=0;i < data.proyectos.length;i++)
+			        {
+                    %>
+						<tr>
+	                        <td colspan="12">
+	                            <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong><%=data.proyectos[i].idProyecto.nombreProyecto%></strong>
+	                            </p>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Nombre del proyecto:</strong> <span><%=data.proyectos[i].idProyecto.nombreProyecto%></span>
+	                            </p>
+	                        </td>
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Organización:</strong> <span><%=data.proyectos[i].idProyecto.idOrganizacion.name%></span>
+	                            </p>
+	                        </td>                                               
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Área:</strong> <span><%=data.proyectos[i].idProyecto.idArea.nombreArea%></span>
+	                            </p>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Encargado:</strong> <span><%=data.proyectos[i].idProyecto.dependentName%></span>
+	                            </p>
+	                        </td>                       
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Estado:</strong> <span><%=data.proyectos[i].idProyecto.status%></span>
+	                            </p>
+	                        </td>
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Condición:</strong> <span><%=data.proyectos[i].idProyecto.condicion%></span>
+	                            </p>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Inicio Proyecto:</strong> <span><%=data.proyectos[i].idProyecto.fechaInicio%></span>
+	                            </p>
+	                        </td>                                               
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Horas Requeridas:</strong> <span><%=data.proyectos[i].idProyecto.horas%></span>
+	                            </p>
+	                        </td>
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong></strong> <span> </span>
+	                            </p>
+	                        </t                        
+	                    </tr>
+	                    <tr>
+	                        <td colspan="12">
+	                            <p style="height: 2px; text-align: center; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Información del Asociado</strong>
+	                            </p>
+	                        </td>                                   
+	                    </tr>
+	                    <tr>
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Rol:</strong> <span><%=data.proyectos[i].rol%></span>
+	                            </p>
+	                        </td>                       
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Estado Asociado:</strong> <span><%=data.proyectos[i].status%></span>
+	                            </p>
+	                        </td>
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Horas:</strong> <span><%=data.proyectos[i].horas%></span>
+	                            </p>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Inicio:</strong> <span><%=data.proyectos[i].fechaInicio%></span>
+	                            </p>
+	                        </td>                                               
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong>Fin:</strong> <span><%=data.proyectos[i].fechaFin%></span>
+	                            </p>
+	                        </td>
+	                        <td colspan="4">
+	                            <p style="height: 2px; text-align: left; font-size: 10px; font-family: 'Helvetica';">
+	                                <strong></strong> <span><%=(((i+1)%3)==0)%> </span>
+	                            </p>
+	                        </td>                        
+	                    </tr>
+	                    <tr><td colspan="12"></td></tr>
+                		<!--%
+            			if(((i+1)%3)==0)
+            			{
+            			%>
+						<div style="page-break-before: always"></div><br>
+	                	}-->               		
+	                <%
+                	}
+					%>	                                        	
+                    </tbody>
+                </table>
+            </center>
+            <%
+            }
+        	%>        	
+		</div>
+	</body>
+</html>	

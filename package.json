@@ -1,0 +1,57 @@
+{
+  "name": "SBOT-LICENSES",
+  "private": false,
+  "version": "1.0.0",
+  "description": "a Sails application",
+  "keywords": [],
+  "dependencies": {
+    "@sailshq/connect-redis": "^3.2.1",
+    "@sailshq/lodash": "^3.10.3",
+    "@sailshq/socket.io-redis": "^5.2.0",
+    "axios": "^0.23.0",
+    "base64-img": "^1.0.4",
+    "bcrypt": "^5.0.1",
+    "csvtojson": "^2.0.10",
+    "device-detector-js": "^2.2.9",
+    "expo-server-sdk": "^3.6.0",
+    "flat": "^5.0.2",
+    "googleapis": "^112.0.0",
+    "grunt": "1.0.4",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.43",
+    "node-schedule": "^2.0.0",
+    "passport": "^0.6.0",
+    "passport-google-oauth2": "^0.2.0",
+    "phone": "^2.4.21",
+    "redis": "^3.0.2",
+    "sails": "^1.2.3",
+    "sails-hook-email": "^0.12.1",
+    "sails-hook-grunt": "^4.0.0",
+    "sails-hook-orm": "^2.1.1",
+    "sails-hook-pdf": "^0.0.7",
+    "sails-hook-sockets": "^2.0.0",
+    "sails-mongo": "^2.0.0",
+    "validate-phone-number-node-js": "0.0.1",
+    "waterline": "^0.13.6"
+  },
+  "devDependencies": {
+    "eslint": "5.16.0"
+  },
+  "scripts": {
+    "start": "NODE_ENV=production node app.js",
+    "test": "npm run lint && npm run custom-tests && echo 'Done.'",
+    "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
+    "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "root",
+  "license": "",
+  "engines": {
+    "node": "^14.19.1"
+  }
+}
