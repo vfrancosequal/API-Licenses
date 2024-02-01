@@ -18,7 +18,7 @@ module.exports.datastores = {
 
  prod: {
     adapter: 'sails-mongo',
-    url: process.env.db_url || 'mongodb://Sbot_dllo:RmqSfk8admQ8nQxU@cluster0-shard-00-00-bkdec.azure.mongodb.net:27017,cluster0-shard-00-01-bkdec.azure.mongodb.net:27017,cluster0-shard-00-02-bkdec.azure.mongodb.net:27017/X-BOT_DLLO?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
+    url: 'mongodb://Sbot_dllo:RmqSfk8admQ8nQxU@cluster0-shard-00-00-bkdec.azure.mongodb.net:27017,cluster0-shard-00-01-bkdec.azure.mongodb.net:27017,cluster0-shard-00-02-bkdec.azure.mongodb.net:27017/X-BOT_DLLO?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
     ssl: true,
     database: 'X-BOT_DLLO',
   },
