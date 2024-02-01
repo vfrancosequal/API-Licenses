@@ -8,8 +8,6 @@
  * https://sailsjs.com/docs/concepts/policies
  */
 
-const { llamadosAtencion } = require("../api/controllers/UsuariosController");
-
 module.exports.policies = {
   /***************************************************************************
    *                                                                          *
