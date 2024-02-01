@@ -14,15 +14,8 @@
  */
 
 module.exports.datastores = {
- prod: {
-    adapter: 'sails-mongo',
-    url: process.env.db_url || 'mongodb+srv://vfranco19:tZqJSJWgi8GRDy@cluster0.qd4o3to.mongodb.net/sequalgea?retryWrites=true&w=majority',
-  },
-  develop: {
-    adapter: 'sails-mongo',
-    url: 'mongodb+srv://vfranco19:tZqJSJWgi8GRDy@cluster0.qd4o3to.mongodb.net/sequalgea?retryWrites=true&w=majority',
-  },
-/*
+
+
  prod: {
     adapter: 'sails-mongo',
     url: 'mongodb://Sbot_dllo:RmqSfk8admQ8nQxU@cluster0-shard-00-00-bkdec.azure.mongodb.net:27017,cluster0-shard-00-01-bkdec.azure.mongodb.net:27017,cluster0-shard-00-02-bkdec.azure.mongodb.net:27017/X-BOT_DLLO?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
@@ -35,5 +28,5 @@ module.exports.datastores = {
     ssl: true,
     database: 'X-BOT_DLLO',
   },
-*/
+
 };
