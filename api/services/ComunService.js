@@ -122,12 +122,12 @@ module.exports = {
 	},
 	toObjectId : function(id){
 		if(ObjectId.isValid(id)) 
-			return ObjectId(id) 
+			return new ObjectId(id) 
 				
 		return false
 	},
 	newObjectId : function(id){		
-			return ObjectId(); 						
+			return new ObjectId(); 						
 	},
 	validEmail : function(email) {
 	  	return /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,5})$/.test(
