@@ -1,4 +1,4 @@
-# api-gea
+# api-licenses-sbot
 
 a [Sails v1](https://sailsjs.com) application
 
