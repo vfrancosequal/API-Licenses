@@ -186,10 +186,10 @@ module.exports = {
 			let valid = [
 				"id:ObjectId",
 			];
-
 			let val = ComunService.validate(params, valid);
 			if (val.error) return res.status(401).send(val);
 
+			console.log(params)
 			let license = await ModelService.findOne('Licenses',{_id:ComunService.toObjectId(params.id)})
 			if (!license)
 				return res.status(401).send(ResponseService.res(401, 30009, true));
