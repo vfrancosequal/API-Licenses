@@ -76,12 +76,15 @@ module.exports = {
 			];
 
 			let val = ComunService.validate(params, valid);
-			if (val.error) return res.status(401).send(val);  		
+			if (val.error) return res.status(401).send(val); 
+
 			let user = await ModelService.findOne('user',{_id:params.email.toLowerCase(),active:true})
 			if (!user)
 				return res.status(401).send(ResponseService.res(401, 30001, true));
+			
 			if (user.profileNew != 'sequalAutomator')
 				return res.status(401).send(ResponseService.res(401, 30001, true));
+
 			// let encryptPass = Crypto.encryptString(params.password,sails.config.globals.KEY);
 			// console.log(encryptPass);
 			// let decryptPass = Crypto.decryptString(encryptPass,sails.config.globals.KEY);
@@ -89,10 +92,12 @@ module.exports = {
 
 			if(params.password != Crypto.decryptString(user.pass,sails.config.globals.KEY))
 				return res.status(401).send(ResponseService.res(401, 30001, true));
+
 			user.device = ComunService.getDevice(req)
 			if(user.device=='device')
 				user.device='browser'	        
 			let $token = await TokenService.sesion(user)
+			
 			return res.json(ResponseService.res(200, 10001, false, $token));
 
 		}catch(err){

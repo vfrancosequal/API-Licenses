@@ -114,6 +114,16 @@ module.exports = {
 		msg[30019] = {
 			text: 'No se puede actualizar el Point ya que se encuentra en estado '+data,
 	      	textEn: 'The Point status cannot be updated because it is in state '+data,
+		};
+
+		msg[30020] = {
+			text: 'Codigo de licencia no válido',
+	      	textEn: 'Invalid license code',
+		};
+
+		msg[30021] = {
+			text: 'Su código de licencia se encuentra inactivo',
+	      	textEn: 'Your license code is inactive',
 		};		   	    			    
     	
 		/* ERROR DEL SISTEMA */

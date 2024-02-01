@@ -1,3 +1,4 @@
+var moment = require('moment')
 module.exports = {
 	listLicenses : async function(req, res)
 	{
@@ -20,6 +21,7 @@ module.exports = {
 			let resp = await ModelService.find('Licenses',query)
 			if(!resp)
 				return res.status(401).send(ResponseService.res(401, 30002, true));
+
 			return res.json(ResponseService.res(200, 10001, false, resp));
 		}
 		catch(err)
@@ -47,9 +49,11 @@ module.exports = {
 			let val = ComunService.validate(params, valid);
 			if (val.error) return res.status(401).send(val);
 
+			params.expirationDate = moment(params.expirationDate,"DD/MM/YYYY").utc().format("YYYY-MM-DD")
 			if(params.licenseType.toLowerCase() == "trial"){
-				expirationDate = moment(params.initialDate,"DD/MM/YYYY").add(30, 'days').utc().format("YYYY-MM-DD");
-				usersNumber = 1
+				params.expirationDate = moment(params.initialDate,"DD/MM/YYYY").utc().format("YYYY-MM-DD");
+				params.expirationDate = moment(params.expirationDate,"YYYY-MM-DD").add(30, 'days').format("YYYY-MM-DD");
+				params.usersNumber = 1
 			}
 
 			let exists = false;
@@ -65,7 +69,7 @@ module.exports = {
 				customerMail : params.customerMail.toLowerCase(),
 				customerName : ComunService.capitalize(params.customerName),
 				initialDate : moment(params.initialDate,"DD/MM/YYYY").utc().format("YYYY-MM-DD"),
-				expirationDate : moment(params.expirationDate,"DD/MM/YYYY").utc().format("YYYY-MM-DD"),
+				expirationDate : params.expirationDate,
 				purchaseDate : moment(params.purchaseDate,"DD/MM/YYYY").utc().format("YYYY-MM-DD"),
 				usersNumber : parseInt(params.usersNumber),
 				licenseType : params.licenseType.toLowerCase(),
@@ -73,7 +77,7 @@ module.exports = {
 				status : true,
 			};
 
-			let result = await ModelService.create("Licences", paramsData);
+			let result = await ModelService.create("Licenses", paramsData);
 			return res.json(ResponseService.res(200, 10001, false, result));
 	    } catch (err) {
 			return res.status(500).send(ResponseService.res(500, 40001, true, err));
@@ -85,35 +89,43 @@ module.exports = {
 		{
 			var params = req.allParams();
 			let valid = [
-				"app:string",
 				"id:ObjectId",
-				"name:string",
-				"dependentName:string",
-				"dependentPhone:string",
-				"dependentEmail:email",					
+				"customerMail:email",
+				"customerName:string",
+				"initialDate:string",
+				"expirationDate:string",
+				"purchaseDate:string",
+				"usersNumber:number",
+				"licenseType:string",				
 			];
 			let paramsData = {}
 
 			let val = ComunService.validate(params, valid);
 			if (val.error) return res.status(401).send(val);
 
-			let permiso = await ComunService.validApp(params.app.toLowerCase(),'admin',req.userEmail)
-			if(!permiso)
-				return res.status(401).send(ResponseService.res(401, 30001, true));
-
-			let organizacion = await ModelService.findOne("Organizaciones", {_id:ComunService.toObjectId(params.id)});
-			if (!organizacion)
+			let license = await ModelService.findOne("Licenses", {_id:ComunService.toObjectId(params.id)});
+			if (!license)
 				return res.status(401).send(ResponseService.res(401, 30009, true));
 
+			params.expirationDate = moment(params.expirationDate,"DD/MM/YYYY").utc().format("YYYY-MM-DD")
+			if(params.licenseType.toLowerCase() == "trial"){
+				params.expirationDate = moment(params.initialDate,"DD/MM/YYYY").utc().format("YYYY-MM-DD");
+				params.expirationDate = moment(params.expirationDate,"YYYY-MM-DD").add(30, 'days').format("YYYY-MM-DD");
+				params.usersNumber = 1
+			}
+
 			paramsData = {
-				name : params.name.toUpperCase(),
-				dependentName : ComunService.capitalize(params.dependentName),
-				dependentPhone : params.dependentPhone,
-				dependentEmail : params.dependentEmail.toLowerCase(),
-				status : organizacion.status,
+				customerMail : params.customerMail.toLowerCase(),
+				customerName : ComunService.capitalize(params.customerName),
+				initialDate : moment(params.initialDate,"DD/MM/YYYY").utc().format("YYYY-MM-DD"),
+				expirationDate : params.expirationDate,
+				purchaseDate : moment(params.purchaseDate,"DD/MM/YYYY").utc().format("YYYY-MM-DD"),
+				usersNumber : parseInt(params.usersNumber),
+				licenseType : params.licenseType.toLowerCase(),
+				status : license.status,
 			};
 
-			let result = await ModelService.update("Organizaciones", paramsData, {_id:organizacion._id});
+			let result = await ModelService.update("Licenses", paramsData, {_id:license._id});
 			return res.json(ResponseService.res(200, 10001, false, result));
 	    } catch (err) {
 			return res.status(500).send(ResponseService.res(500, 40001, true, err));
@@ -125,24 +137,18 @@ module.exports = {
 		{
 			var params = req.allParams();
 			let valid = [
-				"app:string",
 				"id:ObjectId"			
 			];
 			let paramsData = {}
 
-			//validaciones de entrada
 			let val = ComunService.validate(params, valid);
 			if (val.error) return res.status(401).send(val);
 
-			let permiso = await ComunService.validApp(params.app.toLowerCase(),'admin',req.userEmail)
-			if(!permiso)
-				return res.status(401).send(ResponseService.res(401, 30001, true));
-
-			let organizacion = await ModelService.findOne("Organizaciones", {_id:ComunService.toObjectId(params.id)});
-			if (!organizacion)
+			let license = await ModelService.findOne("Licenses", {_id:ComunService.toObjectId(params.id)});
+			if (!license)
 				return res.status(401).send(ResponseService.res(401, 30009, true));
 
-			let result = await ModelService.update("Organizaciones", {status : !organizacion.status},{_id:organizacion._id});
+			let result = await ModelService.update("Licenses", {status : !license.status},{_id:license._id});
 			return res.json(ResponseService.res(200, 10001, false, result));
 	    } catch (err) {
 			return res.status(500).send(ResponseService.res(500, 40001, true, err));
@@ -155,21 +161,16 @@ module.exports = {
 			params = req.allParams();
 			let valid = [
 				"id:ObjectId",
-				"app:string"
 			];
 
 			let val = ComunService.validate(params, valid);
 			if (val.error) return res.status(401).send(val);
 
-			let permiso = await ComunService.validApp(params.app.toLowerCase(),'admin',req.userEmail)
-			if(!permiso)
-				return res.status(401).send(ResponseService.res(401, 30001, true));
-
-			let organizacion = await ModelService.findOne('Organizaciones',{_id:ComunService.toObjectId(params.id)})
-			if (!organizacion)
+			let license = await ModelService.findOne('Licenses',{_id:ComunService.toObjectId(params.id)})
+			if (!license)
 				return res.status(401).send(ResponseService.res(401, 30009, true));
 
-			return res.json(ResponseService.res(200, 10001, false, organizacion));
+			return res.json(ResponseService.res(200, 10001, false, license));
 		}
 		catch(err)
 		{
@@ -177,4 +178,76 @@ module.exports = {
 			return res.status(500).send(ResponseService.res(500, 40001, true, err));
 		}
 	},
+	validateLicense : async function(req,res)
+	{
+		try
+		{
+			params = req.allParams();
+			let valid = [
+				"id:ObjectId",
+			];
+
+			let val = ComunService.validate(params, valid);
+			if (val.error) return res.status(401).send(val);
+
+			let license = await ModelService.findOne('Licenses',{_id:ComunService.toObjectId(params.id)})
+			if (!license)
+				return res.status(401).send(ResponseService.res(401, 30009, true));
+
+			if (!license.status)
+				return res.status(401).send(ResponseService.res(401, 30020, true));
+
+			let today = moment().utc().format("YYYY-MM-DD");
+			if(moment(today).isSameOrBefore(license.initialDate) || moment(today).isSameOrAfter(license.expirationDate))
+				return res.status(401).send(ResponseService.res(401, 30020, true));
+
+			let result = {
+				expirationDate : license.expirationDate,
+				initialDate : license.initialDate,
+				status : license.status
+			}
+			return res.json(ResponseService.res(200, 10001, false, result));
+		}
+		catch(err)
+		{
+			console.log(err)
+			return res.status(500).send(ResponseService.res(500, 40001, true, err));
+		}
+	},
+	associateLicense: async function (req, res)
+	{
+		try
+		{
+			var params = req.allParams();
+			let valid = [
+				"email:email",
+				"licenseCode:string"
+			];
+			let paramsData = {}
+
+			let val = ComunService.validate(params, valid);
+			if (val.error) return res.status(401).send(val);
+
+			let user = await ModelService.findOne("user", {_id:params.email.toLowerCase()});
+			if (!user)
+				return res.status(401).send(ResponseService.res(401, 30002, true));
+
+			let license = await ModelService.findOne("Licenses", {licenseCode:params.licenseCode});
+			if (!license)
+				return res.status(401).send(ResponseService.res(401, 30020, true));
+			
+			if (!license.status)
+				return res.status(401).send(ResponseService.res(401, 30020, true));
+
+			let numLicenses = await ModelService.count("user",{idLicense:license._id,_id:{'$ne':user._id}});
+			if ((numLicenses+1) > license.usersNumber)
+				return res.status(401).send(ResponseService.res(401, 30020, true));
+
+			let result = await ModelService.update("user", {idLicense : license._id},{_id : user._id});
+			return res.json(ResponseService.res(200, 10001, false, result));
+	    } catch (err) {
+			return res.status(500).send(ResponseService.res(500, 40001, true, err));
+	    }
+	},
+
 }

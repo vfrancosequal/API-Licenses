@@ -26,6 +26,12 @@ module.exports.policies = {
   LicensesController:
   {
     createLicense: "isLogin",
+    updateLicense: "isLogin",
+    statusLicense: "isLogin",
+    listLicenses: "isLogin",
+    infoLicense: "isLogin",
+    validateLicense: true,
+    associateLicense: true,
   }
 /*  
   UsuariosController:
