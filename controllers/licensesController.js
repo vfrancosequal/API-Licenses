@@ -10,7 +10,7 @@ const listLicenses = async (req, res) => {
 		if(params.hasOwnProperty('status'))
 			query.status = toBoolean(params.status);
 	  	const licenses = await Licenses.find(query);
-	  	res.status(200).json(licenses);
+	  	res.status(200).json({ status: 200, msg: "Operación realizada con éxito", data: licenses});
 	}catch(err){
 	  	res.status(400).json({err});
 	}
