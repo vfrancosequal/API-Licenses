@@ -65,46 +65,5 @@ module.exports = {
   			console.log(err);
   			return res.status(500).send(ResponseService.res(500, 40001, true, err));
   		}
-  	},
-  	loginUser : async function(req,res)
-  	{
-		try{
-			var params = req.allParams();
-			let valid = [
-				"email:email",
-				"password:string",				
-			];
-
-			let val = ComunService.validate(params, valid);
-			if (val.error) return res.status(401).send(val); 
-			console.log("Antes")
-			let user = await ModelService.find('user',{_id:params.email.toLowerCase(),active:true})
-			console.log(user)
-			if (user.length == 0)
-				return res.status(401).send(ResponseService.res(401, 30001, true));
-			console.log("Despues")
-			user = user[0];
-			if (user.profileNew != 'sequalAutomator')
-				return res.status(401).send(ResponseService.res(401, 30001, true));
-
-			// let encryptPass = Crypto.encryptString(params.password,sails.config.globals.KEY);
-			// console.log(encryptPass);
-			// let decryptPass = Crypto.decryptString(encryptPass,sails.config.globals.KEY);
-			// console.log(decryptPass);
-
-			if(params.password != Crypto.decryptString(user.pass,sails.config.globals.KEY))
-				return res.status(401).send(ResponseService.res(401, 30001, true));
-
-			user.device = ComunService.getDevice(req)
-			if(user.device=='device')
-				user.device='browser'	        
-			let $token = await TokenService.sesion(user)
-			
-			return res.json(ResponseService.res(200, 10001, false, $token));
-
-		}catch(err){
-			console.log(err)
-			return res.status(500).send(ResponseService.res(500, 40001, true, err));
-		}  		
-  	},
+  	}
 }

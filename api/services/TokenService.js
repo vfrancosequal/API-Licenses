@@ -19,7 +19,8 @@ module.exports = {
 			var expire = moment().add(365, "days").unix();
 			var dataToken = {
 				userId 	: data._id.toString(),
-				profile : data.profileNew,
+				userEmail 	: data.email,
+				profile : data.perfil,
 				create 	: create,
 				expire 	: expire,
 				device  : data.device

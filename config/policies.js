@@ -8,6 +8,8 @@
  * https://sailsjs.com/docs/concepts/policies
  */
 
+const { llamadosAtencion } = require("../api/controllers/UsuariosController");
+
 module.exports.policies = {
   /***************************************************************************
    *                                                                          *
@@ -17,21 +19,6 @@ module.exports.policies = {
    ***************************************************************************/
 
   //'*': true,
-  AuthController:
-  {
-    "*":true,
-  },
-  LicensesController:
-  {
-    createLicense: "isLogin",
-    updateLicense: "isLogin",
-    statusLicense: "isLogin",
-    listLicenses: "isLogin",
-    infoLicense: "isLogin",
-    validateLicense: true,
-    associateLicense: true,
-  }
-/*  
   UsuariosController:
   {
     //"*":true,
@@ -49,6 +36,10 @@ module.exports.policies = {
     llamadosAtencion:"isLogin",
     listarLlamdosAtencion: "isLogin",
     checkRedHumana: "isLogin"
+  },
+  AuthController:
+  {
+    "*":true,
   },
   MarcasController:
   {
@@ -227,5 +218,4 @@ module.exports.policies = {
     updateProcedure: "isLogin",
     deleteProcedure: "isLogin",
   },  
-*/
 };

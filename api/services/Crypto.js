@@ -73,7 +73,7 @@ module.exports = {
       // Decrypt and return result.
       cipher.setAuthTag(tag);
       return Buffer.concat([ cipher.update(ciphertext), cipher.final() ]);
-  },
+  }
 
 };
 

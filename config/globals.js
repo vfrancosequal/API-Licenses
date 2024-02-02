@@ -50,6 +50,5 @@ module.exports.globals = {
   sails: true,
 
   TOKEN_KEY:'3E2AD381A993D6ACEB02447E110E8B2B7E29D8A4',
-  KEY:'P#vLdF9Aq7oZ+*',
 
 };

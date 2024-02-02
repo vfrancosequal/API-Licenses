@@ -21,17 +21,7 @@ module.exports.routes = {
 
   'GET /'                             : { view: 'api', locals: { layout: false }},
   'GET /apidoc'                       : { view: 'pages/documentacion' },
-  'POST /login/user'                  : 'AuthController.loginUser',
 
-  'POST /licenses'                    : 'LicensesController.createLicense',
-  'PUT  /licenses'                    : 'LicensesController.updateLicense',
-  'PUT  /licenses/status'             : 'LicensesController.statusLicense',
-  'GET  /licenses'                    : 'LicensesController.listLicenses',
-  'GET  /licenses/info'               : 'LicensesController.infoLicense',
-  'GET /licenses/validate'            : 'LicensesController.validateLicense',
-  'POST /licenses/associate'          : 'LicensesController.associateLicense',
-
-/*
   //'GET /google/login'                 : 'AuthController.loginGoogle',
   //'GET /google/callback'              : 'AuthController.googleCallback',
   'POST /auth/get/token'              : 'AuthController.getAccessToken',
@@ -167,6 +157,5 @@ module.exports.routes = {
   'GET  /procedures'                    : 'ProceduresController.infoProcedure',
   'POST /procedures'                    : 'ProceduresController.createProcedure',
   'PUT  /procedures'                    : 'ProceduresController.updateProcedure',
-  'DELETE /procedures'                  : 'ProceduresController.deleteProcedure', 
-*/ 
+  'DELETE /procedures'                  : 'ProceduresController.deleteProcedure',  
 };
