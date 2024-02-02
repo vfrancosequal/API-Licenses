@@ -1,26 +1,90 @@
-# api-gea
+# API REST- Pruebas unitarias e integración
 
-a [Sails v1](https://sailsjs.com) application
+_Este proyecto permite realizar pruebas unitarias y de integración consumiendo una API REST._
 
+## Comenzando 🚀
 
-### Links
-
-+ [Sails framework documentation](https://sailsjs.com/get-started)
-+ [Version notes / upgrading](https://sailsjs.com/documentation/upgrading)
-+ [Deployment tips](https://sailsjs.com/documentation/concepts/deployment)
-+ [Community support options](https://sailsjs.com/support)
-+ [Professional / enterprise options](https://sailsjs.com/enterprise)
+_Para clonar este proyecto bastará con hacer una copia de la url del repositorio y dirigirse a la consola de git y a traves del comando git clone podrá contribuir al proyecto._
 
 
-### Version info
+### Pre-requisitos 📋
 
-This app was originally generated on Mon Jun 14 2021 09:17:17 GMT-0400 (GMT-04:00) using Sails v1.2.3.
+Instalar
+- [Instalación de dependencias npm](https://www.npmjs.com/)
+- [Extenciones para Visual Studio](https://github.com/microsoft/vscode-azurefunctions)
 
-<!-- Internally, Sails used [`sails-generate@1.16.13`](https://github.com/balderdashy/sails-generate/tree/v1.16.13/lib/core-generators/new). -->
+### Instalación 🔧
+
+Para ejecutar en local
+
+```
+npm run dev
+```
+
+## Ejecutando las pruebas ⚙️
+
+_Para la ejecución de las pruebas, es importante hacerlo por archivos a través del comando npm test nombreArchivo, de lo contrario se podrían presentar errores en la ejecución._
 
 
+### Y las pruebas de estilo de codificación ⌨️
 
-<!--
-Note:  Generators are usually run using the globally-installed `sails` CLI (command-line interface).  This CLI version is _environment-specific_ rather than app-specific, thus over time, as a project's dependencies are upgraded or the project is worked on by different developers on different computers using different versions of Node.js, the Sails dependency in its package.json file may differ from the globally-installed Sails CLI release it was originally generated with.  (Be sure to always check out the relevant [upgrading guides](https://sailsjs.com/upgrading) before upgrading the version of Sails used by your app.  If you're stuck, [get help here](https://sailsjs.com/support).)
--->
+_Estas pruebas permiten validar que el CRUD en la API se realice de manera adecuada._
 
+```
+    describe('GET /api/users', ()=>{
+
+        let response
+        beforeEach(async() =>{
+            response = await request(app).get('/api/users').send()
+        })
+
+        it('The route works', async() => {            
+            expect(response.status).toBe(200)
+            expect(response.headers['content-type']).toContain('json')
+        })
+
+        it('Get all users', async() => {
+            expect(response.status).toBe(200)
+            expect(response.body).toBeInstanceOf(Array)
+        })
+
+        it('If the route is wrong', async() => {
+            const response = await request(app).get('/api/user')
+            expect(response.status).toBe(404)
+        })
+    })
+```
+
+## Construido con 🛠️
+
+* [Node.js](https://nodejs.org/en) 
+* [MongoDB](https://www.mongodb.com/es)
+* [Express](https://expressjs.com/)
+
+## Contribuyendo 🖇️
+
+Por favor lee el [CONTRIBUTING.md](https://gist.github.com/villanuevand/xxxxxx) para detalles de nuestro código de conducta, y el proceso para enviarnos pull requests.
+
+## Wiki 📖
+
+Puedes encontrar mucho más de cómo utilizar este proyecto en nuestra [Wiki](https://github.com/tu/proyecto/wiki)
+
+## Versionado 📌
+
+Usamos [SemVer](http://semver.org/) para el versionado. Para todas las versiones disponibles, mira los [tags en este repositorio](https://github.com/tu/proyecto/tags).
+
+## Autores ✒️
+
+
+* **Tatiana Londoño** - *Trabajo Inicial* - [LinkenId](https://github.com/villanuevand)
+* **Sergio Muñoz** - *Trabajo Inicial* - [LinkenId](https://github.com/villanuevand)
+## Licencia 📄
+
+Este proyecto está bajo la Licencia (Tu Licencia) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+
+## Expresiones de Gratitud 🎁
+
+* Comenta a otros sobre este proyecto 📢
+* Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
+* Da las gracias públicamente 🤓.
+* etc.
