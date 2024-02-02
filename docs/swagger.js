@@ -7,7 +7,7 @@ const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API-NODE',
+      title: 'API-LICENSES',
       version: '1.0.0',
     },
     servers: [

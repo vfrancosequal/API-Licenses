@@ -1,6 +1,14 @@
 import Usuario from "../models/Users.js";
 
-//Crear
+/**
+ * Agrega un nuevo usuario a la base de datos.
+ *
+ * @async
+ * @function
+ * @param {Object} req - Objeto de solicitud express.
+ * @param {Object} res - Objeto de respuesta express.
+ * @throws {Error} Si hay un error al guardar el usuario en la base de datos.
+ */
 const agregar = async (req, res) => {
   try {
     const usuario = new Usuario(req.body);
@@ -54,20 +62,20 @@ const editar = async (req, res) => {
   //Capturar los datos del formulario
   usuario.nombreUsuario = req.body.nombreUsuario || usuario.nombreUsuario;
   usuario.celularUsuario = req.body.celularUsuario || usuario.celularUsuario;
-  
+
   try {
     const usuarioGuardado = await usuario.save();
-    res.json ({ body: usuarioGuardado, msg: "Registro actualizado correctamente.", ok: "SI"});
+    res.json({ body: usuarioGuardado, msg: "Registro actualizado correctamente.", ok: "SI" });
 
-  }catch(error){
+  } catch (error) {
     console.log(error);
   }
 
 }
 
-const listarUno = async (req, res) =>{
+const listarUno = async (req, res) => {
   //recibir los parametros por la url
-  const {id} = req.params;
+  const { id } = req.params;
 
   // validar si existe registro 
   const usuario = await Usuario.findById(id);
@@ -78,14 +86,14 @@ const listarUno = async (req, res) =>{
   }
 
   res.json(usuario);
-  
-  
+
+
 }
 
 export {
   agregar,
-  listar, 
-  eliminar, 
-  editar, 
+  listar,
+  eliminar,
+  editar,
   listarUno
 }

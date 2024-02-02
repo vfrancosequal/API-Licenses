@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import conectarDB from './config/db.js';
+import cors from 'cors';
 
 //Swagger
 import swaggerUI from 'swagger-ui-express';
@@ -8,14 +9,20 @@ import swaggerSpec from './docs/swagger.js';
 
 //Importacion de rutas
 import usersRoutes  from "./routes/usersRoutes.js"
+ 
+
 
 //Iniciamos el servidor express
 const app =express();
+
 // para leer los datos en formato json 
 app.use(express.json());
 
+app.use(cors())
+
 //Iniciamos variables del entorno
 dotenv.config();
+
 
 //Conectar a db mongo
 conectarDB();

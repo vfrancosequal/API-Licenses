@@ -32,13 +32,13 @@ import{agregar, listar, eliminar, editar, listarUno} from "../controllers/userCo
  *           description: Número de teléfono del usuario
  *       example:
  *         id: 64474ab45f54f70ec45fd27e
- *         nombresUsuario: Sergio Muñoz
+ *         nombresUsuario: nombre de usuario
  *         celularUsuario: 1234587
  */
 
 /**
  * @swagger
- * /api/users:
+ * /api/users/:
  *   post:
  *     summary: Agrega un nuevo usuario
  *     tags: [Users]
@@ -63,7 +63,7 @@ import{agregar, listar, eliminar, editar, listarUno} from "../controllers/userCo
 
  /**
   * @swagger
-  * /api/users/agregar:
+  * /api/users/:
   *   get:
   *     summary: Obtiene todos los usuarios
   *     tags: [Users]
@@ -158,6 +158,7 @@ import{agregar, listar, eliminar, editar, listarUno} from "../controllers/userCo
   *         description: El usuario con el ID especificado no fue eliminado
   *
   */
+
  router.delete("/:id", eliminar);
  
  export default router;
