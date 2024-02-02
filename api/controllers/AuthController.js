@@ -65,5 +65,5 @@ module.exports = {
   			console.log(err);
   			return res.status(500).send(ResponseService.res(500, 40001, true, err));
   		}
-  	}
+  	},
 }
