@@ -2,7 +2,7 @@ import Licenses from "../models/Licenses.js";
 import {generateCode, toBoolean} from "../services/comunServices.js";
 import moment from 'moment'
 
-//Leer
+//Lista
 const listLicenses = async (req, res) => {
 	try{
 		let params = req.query;
@@ -15,7 +15,7 @@ const listLicenses = async (req, res) => {
 	  	res.status(400).json({err});
 	}
 }
-
+//create
 const createLicenses = async (req,res)=>{
 	let params = req.body;
 	if(!params.hasOwnProperty('customerMail')){
@@ -69,14 +69,52 @@ const createLicenses = async (req,res)=>{
 		};
 		const licenseData = new Licenses(paramsData);
 		const newLicense = await licenseData.save();
-  		res.status(200).json({ status: 200, msg: "Operación realizada con éxito", data: newLicense });
+  		return res.status(200).json({ status: 200, msg: "Operación realizada con éxito", data: newLicense });
   	} catch (error) {
     	console.log(error);
     	return res.status(400).json({error});
   	}
 }
 
+//info
+const infoLicenses = async (req, res) => {
+	try{
+		let params = req.query;
+		
+		if(!params.hasOwnProperty('id'))
+			return res.status(404).json({ status: 400, msg: "id de licencia es un campo obligatorio"});		
+	  	
+	  	const license = await Licenses.findById(params.id);
+	  	return res.status(200).json({ status: 200, msg: "Operación realizada con éxito", data: license});
+	}catch(err){
+	  	return res.status(400).json({status: 400, err: err});
+	}
+}
+
+//cambiar status
+const statusLicenses = async (req, res) => {
+	try{
+		let params = req.body;
+		
+		if(!params.hasOwnProperty('id'))
+			return res.status(404).json({ status: 400, msg: "id de licencia es un campo obligatorio"});
+	  	
+	  	const result = await Licenses.findById(params.id);
+	  	if(!result)
+			return res.status(404).json({ status: 400, msg: "Registro no encontrado"});
+		
+		result.status = result.status?false:true;
+
+		const savedLicense = await result.save();
+	  	return res.status(200).json({ status: 200, msg: "Operación realizada con éxito", data: savedLicense});
+	}catch(err){
+	  	return res.status(400).json({status: 400, err: err});
+	}
+}
+
 export {
   listLicenses,
-  createLicenses
+  createLicenses,
+  infoLicenses,
+  statusLicenses
 }

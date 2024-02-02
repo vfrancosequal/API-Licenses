@@ -35,7 +35,17 @@ const licensesSchema = mongoose.Schema({
     type: Number,
     required: true,
     trim: true
-  }
+  },
+  status: {
+    type: Boolean,
+    required: true,
+    trim: true
+  },
+  licenseCode: {
+    type: String,
+    required: true,
+    trim: true
+  }  
 }, {
   timestamps: true
 });

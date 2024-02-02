@@ -1,4 +1,3 @@
-	
 const generateCode = () => {
   	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   	let code = '';
@@ -19,6 +18,5 @@ const toBoolean = (val) =>{
 	   return false;
   return null;	
 }
-
 
 export {generateCode, toBoolean};
