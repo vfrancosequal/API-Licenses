@@ -9,7 +9,8 @@ import swaggerSpec from './docs/swagger.js';
 
 //Importacion de rutas
 import usersRoutes  from "./routes/usersRoutes.js"
- 
+
+import licensesRoutes  from "./routes/licensesRoutes.js"
 
 
 //Iniciamos el servidor express
@@ -29,6 +30,7 @@ conectarDB();
 
 //Routing del API
 app.use("/api/users", usersRoutes);
+app.use("/licenses", licensesRoutes);
 
 //Ruta para la documentación
 app.use('/documentation', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
