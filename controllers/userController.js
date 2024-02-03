@@ -1,4 +1,4 @@
-import Usuario from "../models/Users.js";
+import Usuario from "../models/User.js";
 
 /**
  * Agrega un nuevo usuario a la base de datos.
